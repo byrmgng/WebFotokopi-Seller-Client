@@ -1,0 +1,178 @@
+* {
+    /* Fonts  */
+    font-family: "Dancing Script", cursive;
+    font-family: "Inter", sans-serif;
+    font-family: "Itim", cursive;
+    font-family: "Titillium Web", sans-serif;
+    /* */
+  }
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  header {
+    background-image: url("../../../assets/background1.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: right;
+    height: 100vh;
+    display: block;
+    overflow-y: scroll;
+    
+  }
+  header .content {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: top;
+    text-align: center;
+    height: 100vh;
+    
+  }
+  
+  /* WebFotokopi Animation */
+  
+  .animation-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .text-animation {
+    font-size: 150px;
+    font-weight: bold;
+    display: flex;
+    align-items: left;
+  }
+
+  .text-animation span {
+    opacity: 0;
+    animation: writeLetter 0.5s linear forwards;
+  }
+  
+  @keyframes writeLetter {
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  svg.svg-inline--fa.fa-pen {
+    font-size: 150px;
+    margin-left: 10px;
+    opacity: 0;
+    animation: movePen 5s forwards;
+  }
+  
+  @keyframes movePen {
+    0% {
+      opacity: 0;
+      transform: translateX(-100px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  /* Responsive */
+  @media screen and (max-width: 576px) {
+    #contents {
+      background-color: white;
+      border: 2px solid black;
+      border-radius: 3%;
+      text-align: center;
+    }
+    .text-animation {
+      font-size: 40px; /* Küçük ekranlarda metin boyutunu azaltın */
+    }
+  
+    svg.svg-inline--fa.fa-pen {
+      font-size: 40px; /* Kalemin boyutunu küçültün */
+    }
+    
+  }
+  @media screen and (max-width: 768px) and (min-width: 576px) {
+    #contents {
+      background-color: white;
+      border: 2px solid black;
+      border-radius: 5%;
+    }
+    .text-animation {
+      font-size: 75px; /* Küçük ekranlarda metin boyutunu azaltın */
+    }
+  
+    svg.svg-inline--fa.fa-pen {
+      font-size: 75px; /* Kalemin boyutunu küçültün */
+    }
+  }
+  @media screen and (max-width: 992px) and (min-width: 768px) {
+    #contents {
+      background-color: white;
+      border: 2px solid black;
+      border-radius: 5%;
+    }
+    .text-animation {
+      font-size: 100px; /* Küçük ekranlarda metin boyutunu azaltın */
+    }
+  
+    svg.svg-inline--fa.fa-pen {
+      font-size: 100px; /* Kalemin boyutunu küçültün */
+    }
+    #invateCard{
+      width: 75%;
+    }
+  }
+  @media screen and (max-width: 1200px) and (min-width: 992px) {
+    #contents {
+      background-color: white;
+      border: 2px solid black;
+      border-radius: 5%;
+    }
+    .text-animation {
+      font-size: 100px; /* Küçük ekranlarda metin boyutunu azaltın */
+    }
+  
+    svg.svg-inline--fa.fa-pen {
+      font-size: 100px; /* Kalemin boyutunu küçültün */
+    }
+    #invateCard{
+      width: 70%;
+    }
+  }
+  @media screen and (max-width: 1400px) and (min-width: 1200px) {
+    .text-animation {
+      font-size: 100px; /* Küçük ekranlarda metin boyutunu azaltın */
+    }
+  
+    svg.svg-inline--fa.fa-pen {
+      font-size: 100px; /* Kalemin boyutunu küçültün */
+    }
+    #invateCard{
+      width: 50%;
+    }
+  }
+  @media screen and (min-width: 1400px) {
+    #invateCard{
+      width: 35%;
+    }
+  }
+  
+  /* Seller Invate */
+  section{
+    display: block;
+  }
+  .sellerInvateImage{
+    background-image: url("../../../assets/photocopyMachine.jpg");
+    background-size: cover;
+    background-position: right;
+    height: 40vh;
+  }
+  /*Footer*/
+  #footerSpace{
+    height: 100px;
+  }
+  footer .logo{
+    font-size: 3rem;
+  }

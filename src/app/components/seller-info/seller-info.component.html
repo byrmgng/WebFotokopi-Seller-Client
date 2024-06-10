@@ -1,0 +1,72 @@
+<div class="container">
+    <div class="card my-5">
+        <h5 class="card-header">Adres Bilgileri</h5>
+        <div class="card-body">
+          <div class="row">
+            <p class="card-text col">
+                <span><b>Şehir</b></span>
+                <select #citySelect class="form-control form-select border-0 border-bottom rounded-0" id="city" (change)="changeCity()">
+                    <option disabled selected [value]="">İl Seçiniz</option>
+                    <option *ngFor="let city of cities" [value]="city.cityID">{{city.cityName}}</option>
+                </select>
+            </p>
+            <p class="card-text col">
+                <span><b>İlçe</b></span>
+                <select #districtSelect class="form-control form-select border-0 border-bottom rounded-0" (change)="changeDistrict()"  id="districtSelect" name="districtSelect" >
+                    <option value='' disabled selected>İlçe Seçiniz</option>
+                    <option *ngFor="let district of districts" [value]="district.districtID" >{{district.districtName}}</option>
+                </select>
+            </p>
+          </div>
+          <div class="row">
+            <span><b>Adres</b></span>
+            <span><textarea #address class="form-control" id="addressTextArea" rows="3"></textarea></span>
+          </div><br>
+          <button class="btn btn-success float-end" type="button" (click)="AddressUpdate()">Kaydet</button>
+        </div>
+    </div>
+    <div class="card my-5">
+      <h5 class="card-header">Şirket Bilgileri</h5>
+      <div class="card-body">
+        <p><b>Şirket Adı</b><input #companyName type="text" class="form-control" placeholder="Şirket Adı"></p>
+
+        <span><b>Telefon Numarası</b></span>
+        <span><input disabled #phoneNumber type="text" class="form-control" placeholder="Telefon Numarası"></span><br>
+
+        <span><b>Şirket Hakkında</b></span>
+        <span><textarea #description class="form-control" id="addressTextArea" rows="3"></textarea></span><br>
+
+
+
+        <button class="btn btn-success float-end" (click)="SellerInfoUpdate()">Kaydet</button>
+      </div>
+  </div>
+  <div class="card my-5">
+    <h5 class="card-header">Görseller</h5>
+    <div class="card-body">
+      <div><label for="logo" class="form-label"><b>Logo</b></label></div>
+
+      <div class="input-group mb-3">
+        <input #logo class="form-control" type="file" id="logo" accept="application/pdf">
+        <div class="input-group-append">
+          <button class="btn btn-success" (click)="SellerLogoUpdate()">Kaydet</button>
+        </div>
+      </div>
+      <div class="text-danger">Görsel Boyutu 200x300 piksel olmalıdır.</div>
+
+
+      <br>
+      <div><label for="logo2" class="form-label"><b>Kapak Fotoğrafı</b></label></div>
+
+      <div class="input-group mb-3">
+        <input #logo2 class="form-control" type="file" id="logo2" accept="application/pdf">
+        <div class="input-group-append">
+          <button class="btn btn-success" (click)="SellerLogoUpdate2()">Kaydet</button>
+        </div>
+      </div>
+      <div class="text-danger">Görsel Boyutu 500x120 piksel olmalıdır.</div>
+
+      <br>
+    </div>
+  </div>
+</div>

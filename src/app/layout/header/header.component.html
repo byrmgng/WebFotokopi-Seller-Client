@@ -1,0 +1,34 @@
+<nav class="navbar navbar-expand shadow">
+  <div class="container-fluid">
+    <a  routerLink="" class="navbar-brand">
+      <i><strong>WebFotokopi</strong><img src="../../../../assets/icons/pen.svg" alt="linkedin logo" width="20px" ></i>
+    </a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="/orders"  *ngIf="authService.isAuthenticated">Siparişler</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="/files"  *ngIf="authService.isAuthenticated">Dosyalar</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="/packages"  *ngIf="authService.isAuthenticated">Paketler</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="/sellerInfo"  *ngIf="authService.isAuthenticated">Hesap</a>
+        </li>
+      </ul>
+    </div>
+    <ul class="navbar-nav">
+      <li class="nav-item m-1">
+        <button class="btn btn-outline-dark" aria-current="page" routerLink="login" *ngIf="!authService.isAuthenticated">Giriş Yap</button>
+      </li>
+      <li class="nav-item m-1">
+        <button class="btn btn-dark" aria-current="page" routerLink="registration" *ngIf="!authService.isAuthenticated">Başvuru Yap</button>
+      </li>
+      <li class="nav-item m-1">
+        <button class="btn btn-outline-dark" routerLink="" *ngIf="authService.isAuthenticated" (click)="LogOut()">Çıkış Yap</button>
+      </li>
+    </ul>
+  </div>
+</nav>

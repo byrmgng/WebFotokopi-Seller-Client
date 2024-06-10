@@ -1,0 +1,8 @@
+.form-check-input:checked {
+    background-color: #000000; /* Varsayılan mavi rengi */
+  }
+  
+  /* Checkbox işaretinin rengi */
+  .form-check-input:checked + .form-check-label::before {
+    background-color: #000000; /* Varsayılan beyaz rengi */
+  }

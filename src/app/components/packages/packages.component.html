@@ -1,0 +1,280 @@
+<!-- Filter Package Container -->
+<div class="card m-5">
+  <h5 class="card-header bg-dark text-white">Paket seçenekleri</h5>
+  <div class="card-body">
+    <div class="row">
+      <div class="col"><label for="filterName" class="form-label"><b>Paket Adı</b></label></div>
+      <div class="col"><label for="filterPaperSize" class="form-label"><b>Kağıt Boyu</b></label></div>
+      <div class="col"><label for="filterPaperType" class="form-label"><b>Kağıt Türü</b></label></div>
+      <div class="col"><label for="filterSheetsPerPage" class="form-label"><b>Bir yüzdeki sayfa sayısı</b></label></div>
+      <div class="col"><label for="filterColorMode" class="form-label"><b>Renk Seçeneği</b></label></div>
+      <div class="col"><label for="filterDuplexMode" class="form-label"><b>Baskı Seçeneği</b></label></div>
+      <div class="col"><label for="filterIsActive" class="form-label"><b>Gösterim Durumu</b></label></div>
+    </div>
+    <div class="row"> 
+      <div class="col"><input #filterName type="text" class="form-control border-0 border-bottom rounded-0" name="filterName" id="filterName" placeholder="Paket Adı" required></div>
+      <div class="col">
+        <select #filterPaperSize class="form-control form-select border-0 border-bottom rounded-0" id="filterPaperSize" name="filterPaperSize">
+          <option value='' selected>Tümü</option>
+          <option *ngFor="let papersize of packageFeature?.paperSizes" [value]="papersize.paperSizeID">{{papersize.paperSizeName}}</option>
+        </select>
+      </div>
+      <div class="col">
+        <select #filterPaperType class="form-control form-select border-0 border-bottom rounded-0" id="filterPaperType" name="filterPaperType">
+          <option value='' selected>Tümü</option>
+          <option *ngFor="let papertype of packageFeature?.paperTypes" [value]="papertype.paperTypeID">{{papertype.paperTypeName}}</option>
+        </select>
+      </div>
+      <div class="col">
+        <select #filterSheetsPerPage class="form-control form-select border-0 border-bottom rounded-0" id="filterSheetsPerPage" name="filterSheetsPerPage">
+          <option value='' selected>Tümü</option>
+          <option *ngFor="let sheetsperpage of packageFeature?.sheetsPerPages" [value]="sheetsperpage.sheetsPerPageID">{{sheetsperpage.sheetsPerPageNumber}}</option>
+        </select>
+      </div>
+      <div class="col">
+        <select #filterColorMode class="form-control form-select border-0 border-bottom rounded-0" id="filterColorMode" name="filterColorMode">
+          <option value='' selected>Tümü</option>
+          <option value='true'>Renkli</option>
+          <option value='false'>Siyah-Beyaz</option>
+        </select>
+      </div>
+      <div class="col">
+        <select #filterDuplexMode class="form-control form-select border-0 border-bottom rounded-0" id="filterDuplexMode" name="filterDuplexMode">
+          <option value='' selected>Tümü</option>
+          <option value='false'>Tek Yüz</option>
+          <option value='true'>Arkalı Önlü</option>
+        </select>
+      </div>
+      <div class="col">
+        <select #filterIsActive class="form-control form-select border-0 border-bottom rounded-0" id="filterIsActive" name="filterIsActive">
+          <option value='' selected>Tümü</option>
+          <option value='true'>Aktif</option>
+          <option value='false'>Pasif</option>
+        </select>
+      </div>
+    </div>
+    <br>
+    <div>
+      <div class="float-start w-25">
+        <button class="btn btn-success m-2 w-50" (click)="this.updateOrCreate=false;clearModal();" data-bs-target="#packageAdditionModal" data-bs-toggle="modal">Paket Ekle</button>
+      </div>
+      <div class="float-end w-25 row">
+        <button (click)="filter()" class="btn btn-dark m-2 w-50 col">Filtele</button>
+        <button (click)="clearFilter()" class="btn btn-primary m-2 w-50 col">Temizle</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Add Package Modal -->
+<div class="modal fade" id="packageAdditionModal" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true" aria-labelledby="addPackageLabel" tabindex="-1">
+  <div class="modal-dialog  modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="addPackageLabel">{{this.updateOrCreate ? 'Paket Güncelleme':'Paket Ekleme'}}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-3"><label for="addPackageName" class="form-label"><b>Paket Adı:</b></label></div>
+          <div class="col-9"><input #addPackageName  type="text" class="form-control border-0 border-bottom rounded-0" name="addPackageName" id="addPackageName" placeholder="Paket Adı" required></div>
+        </div><br>
+        <div class="row">
+          <div class="col-3"><label for="addPackagePaperSize" class="form-label"><b>Kağıt Boyu:</b></label></div>
+          <div class="col-9">
+            <select #addPackagePaperSize  class="form-control form-select border-0 border-bottom rounded-0" id="addPackagePaperSize" name="addPackagePaperSize">
+              <option *ngFor="let papersize of packageFeature?.paperSizes" [value]="papersize.paperSizeID">{{papersize.paperSizeName}}</option>
+            </select>
+          </div>
+        </div><br>
+        <div class="row">
+          <div class="col-3"><label for="addPackagePaperType" class="form-label"><b>Kağıt Türü</b></label></div>
+          <div class="col-9">
+            <select #addPackagePaperType class="form-control form-select border-0 border-bottom rounded-0" id="addPackagePaperType" name="addPackagePaperType">
+              <option *ngFor="let papertype of packageFeature?.paperTypes" [value]="papertype.paperTypeID">{{papertype.paperTypeName}}</option>
+            </select>
+          </div>
+        </div><br>
+        <div class="row">
+          <div class="col-3"><label for="addPackageSheetsPerPage" class="form-label"><b>Bir Yüzdeki Sayfa Sayısı</b></label></div>
+          <div class="col-9">
+            <select #addPackageSheetsPerPage class="form-control form-select border-0 border-bottom rounded-0" id="addPackageSheetsPerPage" name="addPackageSheetsPerPage">
+              <option *ngFor="let sheetsperpage of packageFeature?.sheetsPerPages" [value]="sheetsperpage.sheetsPerPageID">{{sheetsperpage.sheetsPerPageNumber}}</option>
+            </select>
+          </div>
+        </div><br>
+        <div class="row">
+          <div class="col-3"><label class="form-label"><b>Renk Seçeneği</b></label></div>
+          <div class="col-9">
+            <div class="form-check form-check-inline">
+              <input #addPackageColorMode  class="form-check-input" type="radio" name="addPackageColorMode" id="colourful" value="colourful">
+              <label class="form-check-label" for="colourful">Renkli</label>
+            </div>
+            <div  class="form-check form-check-inline">
+              <input #addPackageColorMode2 class="form-check-input" type="radio" name="addPackageColorMode" id="blackWhite" value="blackWhite">
+              <label class="form-check-label" for="blackWhite">Siyah-Beyaz</label>
+            </div>
+          </div>
+        </div>
+        <small class="text-danger form-text invalid-feedback">Lütfen renk seçeneğini seçiniz.</small>
+        <br>
+        <div class="row">
+          <div class="col-3"><label class="form-label"><b>Baskı Seçeneği</b></label></div>
+          <div class="col-9">
+            <div class="form-check form-check-inline">
+              <input #addPackageDuplexMode2 class="form-check-input" type="radio" name="addPackageDuplexMode" id="singleSide" value="singleSide">
+              <label class="form-check-label" for="singleSide">Tek Yüz</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input #addPackageDuplexMode  class="form-check-input" type="radio" name="addPackageDuplexMode" id="doubleSide" value="doubleSide">
+              <label class="form-check-label" for="doubleSide">Arkalı-Önlü</label>
+            </div>
+          </div>
+        </div>
+        <small class="text-danger form-text invalid-feedback">Lütfen baskı seçeneğini seçiniz.</small>
+        <br>
+        <div class="row">
+          <div class="col-3"><label for="addPackagePrice" class="form-label"><b>Paket Fiyatı (Kağıt Başına):</b></label></div>
+          <div class="col-9">
+            <div class="input-group mb-3">
+                <input #addPackagePrice type="number" class="form-control text-end" placeholder="Paket Fiyatı" name="addPackagePrice" id="addPackagePrice"  aria-label="Recipient's username" aria-describedby="priceType" required>
+              <span class="input-group-text" id="priceType">TL</span>
+            </div>
+          </div>
+        </div>
+
+        <br>
+      </div>
+      <div class="modal-footer">
+        <div class="row w-100">
+          <button class="btn btn-danger w-50 col mx-2" data-bs-dismiss="modal" >İptal Et</button>
+          <button class="btn btn-success w-50 col mx-2" data-bs-target="#packageAdditionConfirmed" data-bs-toggle="modal" (click)="nextClick()">İleri</button>        
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Add Package Confirm Modal-->
+<div class="modal fade" id="packageAdditionConfirmed" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true" aria-labelledby="packageAdditionConfirmedLabel" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="packageAdditionConfirmedLabel">{{this.updateOrCreate ? 'Paket Güncelleme':'Paket Ekleme'}}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col"><label class="form-label"><b>Paket Adı:</b></label></div>
+          <div class="col"><label #addPackageNameConfirm class="form-label"></label></div>
+        </div>
+        <div class="row">
+          <div class="col"><label class="form-label"><b>Kağıt Boyutu:</b></label></div>
+          <div class="col"><label #addPackagePaperSizeConfirm class="form-label"></label></div>
+        </div>
+        <div class="row">
+          <div class="col"><label class="form-label"><b>Kağıt Türü:</b></label></div>
+          <div class="col"><label #addPackagePaperTypeConfirm class="form-label"></label></div>
+        </div>
+        <div class="row">
+          <div class="col"><label class="form-label"><b>Bir Yüzdeki Sayfa Sayısı:</b></label></div>
+          <div class="col"><label #addPackageSheetsPerPageConfirm class="form-label"></label></div>
+        </div>
+        <div class="row">
+          <div class="col"><label class="form-label"><b>Renk Seçeneği:</b></label></div>
+          <div class="col"><label #addPackageColorModeConfirm class="form-label"></label></div>
+        </div>
+        <div class="row">
+          <div class="col"><label class="form-label"><b>Baskı Seçeneği:</b></label></div>
+          <div class="col"><label #addPackageDuplexModeConfirm class="form-label"></label></div>
+        </div>
+        <div class="row">
+          <div class="col"><label class="form-label"><b>Fiyat:</b></label></div>
+          <div class="col"><label #addPackagePriceConfirm class="form-label"></label></div>
+        </div>
+        <div class="row">
+          <div class="col"><label class="form-label"><b>Aktiflik Durumu:</b></label></div>
+          <div class="col">
+            <div class="form-check form-switch">
+              <input #addPackageSwitchConfirm class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked><br>
+              <label class="form-check-label" for="flexSwitchCheckChecked">(Bu seçenek aktifken paket müşteriler tarafından kullanılabilir.)</label>
+            </div>
+          </div>
+        </div>
+      </div> 
+      <div class="modal-footer">
+        <div class="row w-100">
+          <button class="btn btn-primary w-50 col mx-2" data-bs-target="#packageAdditionModal" data-bs-toggle="modal">Geri Dön</button>
+          <button class="btn btn-success w-50 col mx-2"  data-bs-dismiss="modal" (click)="this.updateOrCreate ?  updatePackage(this.updatePackagesID): createPackage();">Onayla</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Delete Package Confirm Modal-->
+<div class="modal fade" id="deletePackageModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="deletePackageModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Paket Silme</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div #deletePackageModalBody class="modal-body">
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary w-25" data-bs-dismiss="modal">Vazgeç</button>
+        <button (click)="remove()" data-bs-dismiss="modal" type="button" class="btn btn-danger w-25">Sil</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Dinamic Package Container -->
+<div *ngFor="let package of packages" class="mb-3" id={{package.packageID}}>
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-11">
+        <div class="card align-middle">
+          <h4 class="card-header bg-muted text-dark">Paket Adı: {{package?.packageName}}</h4>
+          <div class="card-body text-center">
+            <div class="row">
+              <div class="col"><label class="form-label"><b>Kağıt Boyu</b></label></div>
+              <div class="col"><label class="form-label"><b>Kağıt Türü</b></label></div>
+              <div class="col"><label class="form-label"><b>Bir Yüzdeki Sayfa Sayısı</b></label></div>
+              <div class="col"><label class="form-label"><b>Gösterim Durumu</b></label></div>
+              <div class="col-2"><button (click)="this.updateOrCreate=true; this.updatePackagesID =package.packageID; fillUpdate(package)" data-bs-target="#packageAdditionModal" data-bs-toggle="modal" type="button" class="btn btn-xxl btn-success float-end w-100">Güncelle</button></div>
+            </div>
+            <div class="row">
+              <div class="col"><label class="form-label">{{package?.paperSize?.paperSizeName}}</label></div>
+              <div class="col"><label class="form-label">{{package?.paperType?.paperTypeName}}</label></div>
+              <div class="col"><label class="form-label">{{package?.sheetsPerPage?.sheetsPerPageNumber}}</label></div>
+              <div class="col"> <label class="form-label" [ngClass]="package?.isActive ? 'text-success' : 'text-danger'"><b>{{package?.isActive ? 'Aktif' : 'Pasif' }}</b></label></div>
+              <div class="col-2"> </div>  
+            </div>
+            <div class="row">
+              <div class="col"><label class="form-label"><b>Renk Seçeneği</b></label></div>
+              <div class="col"><label class="form-label"><b>Baskı Seçeneği</b></label></div>
+              <div class="col"><label class="form-label"></label></div>
+              <div class="col"><label class="form-label"><b>Fiyat</b></label></div>
+              <div class="col-2"><button (click)="removeBtn(package)" type="button" class="btn btn-xxl btn-danger float-end w-100" data-bs-toggle="modal" data-bs-target="#deletePackageModal">Sil</button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col"> <label class="form-label">{{package?.colorMode ? 'Renkli' : 'Siyah-Beyaz' }}</label></div>
+              <div class="col"> <label class="form-label">{{package?.duplexMode ? 'Arkalı-Önlü' : 'Tek Yüz' }}</label></div>
+              <div class="col"><label class="form-label"></label></div>
+              <div class="col"><label class="form-label">{{package?.price}} TL</label></div>
+              <div class="col-2"><label class="form-label"></label></div>
+            </div>
+          </div>
+          <div class="card-footer text-muted">
+            <div class="row float-end">
+              <div class="col ms-2"><b>Oluşturma Tarihi: </b> {{package.createdDate}}</div>
+            </div>
+            <div class="row float-end">
+              <div class="col" *ngIf="package.updatedDate"><b>Son Güncelleme Tarihi: </b> {{package.updatedDate}}</div>
+            </div>          
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

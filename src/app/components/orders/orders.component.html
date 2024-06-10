@@ -1,0 +1,148 @@
+<div class="card m-5">
+  <h5 class="card-header bg-dark text-white">Sipariş Ara</h5>
+  <div class="card-body">
+    <div class="row">
+      <div class="col"><label for="filterCustomerName" class="form-label"><b>Müşteri Adı</b></label></div>
+      <div class="col"><label for="filterCustomerPhoneNumber" class="form-label"><b>Müşteri Numarası</b></label></div>
+      <div class="col"><label for="filterProductStatus" class="form-label"><b>Sipariş Durumu</b></label></div>
+    </div>
+    <div class="row"> 
+      <div class="col"><input #filterCustomerName type="text" class="form-control border-0 border-bottom rounded-0" name="filterCustomerName" id="filterCustomerName" placeholder="Müşteri Adı" required></div>
+      <div class="col"><input #filterCustomerPhoneNumber type="text" class="form-control border-0 border-bottom rounded-0" name="filterCustomerPhoneNumber" id="filterCustomerPhoneNumber" placeholder="Müşteri Numarası" required></div>
+      <div class="col">
+        <select #filterProductStatus class="form-control form-select border-0 border-bottom rounded-0" id="filterProductStatus" name="filterProductStatus">
+          <option value="0" selected>Tümü</option>
+          <option value='1'>Onay Bekleniyor</option>
+          <option value='2'>Hazırlanıyor</option>
+          <option value='3'>Hazır</option>
+          <option value='4'>Teslim Edildi</option>
+          <option value='5'>İptal Edildi</option>
+        </select>
+      </div>
+    </div>
+    <br>
+    <div>
+      <div class="float-end w-25 row">
+        <button class="btn btn-dark m-2 w-50 col" (click)="filter()">Filtele</button>
+        <button class="btn btn-primary m-2 w-50 col" (click)="clearFilter()">Temizle</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Dinamic Order Container -->
+<div  class="m-5 mb-3">
+  <div class="container-fluid my-3" *ngFor="let item of orders" id="{{item.orderID}} ">
+    <div class="row justify-content-center">
+      <div class="col-11">
+        <div class="card align-middle" > 
+          <h4 class="card-header text-dark" [ngClass]="item.orderStatus == 5 ? 'bg-danger-subtle' : item.orderStatus ==4 ? 'bg-success-subtle' : 'bg-muted' " ><span class="float-start">Müşteri Ad Soyad: {{item.customerName}}</span><span class="float-end">Teslimat Durumu: 
+              {{(item.orderStatus) == 1 ? "Onay Bekliyor" : 
+              (item.orderStatus) == 2 ? "Hazırlanıyor" : 
+              (item.orderStatus) == 3 ? "Hazır" : 
+              (item.orderStatus) == 4 ? "Teslim Edildi" : "İptal Edildi"}}</span> </h4>
+          <div class="card-body">
+            <div class="row">
+              <div class="col text-start"><b>Müşteri Adı: </b>{{item.customerName}}</div>
+              <div class="col text-center"><b>Müşteri Adresi: </b>{{item.customerAddress}}</div>
+              <div class="col text-end"><b>Müşteri Numarası: </b>{{item.customerPhoneNumber}}</div>
+            </div><br>
+            <div class="accordion accordion-flush" id="accordionProduct">
+              <div class="accordion-item"  *ngFor="let product of item.orderItems; let i = index" id="{{item.orderID + '-' + i}}">
+                <h2 class="accordion-header" id="{{item.orderID + '-heading-' + i}}"> 
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    [attr.data-bs-target]="'#flush-collapse-' + item.orderID + '-' + i"
+                    aria-expanded="false"
+                    [attr.aria-controls]="'flush-collapse-' + item.orderID + '-' + i"
+                    (click)="updateModalFill(i.toString(),product.fileID,item.orderID);">
+                    {{product.fileTitle}}
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapse-{{item.orderID + '-' + i}}"
+                  class="accordion-collapse collapse"
+                  [attr.aria-labelledby]="item.orderID + '-heading-' + i"
+                  data-bs-parent="#accordionProduct">
+                  <div class="accordion-body">
+                      <div class="row">
+                          <div class="col-9" id="{{i+item.orderID}}">
+                          </div>
+                          <div class="col-3 text-end">
+                              <div class="row">
+                                  <h5>Dosya Özellikleri</h5>
+                                  <span><b>Dosya Başlığı: </b>{{product.fileTitle}}</span><br>
+                                  <span><b>Dosya Notu: </b>{{product.fileNote}}</span><br>
+                                  <span><b>Sayfa Sayısı: </b>{{product.fileNumberOfFile}}</span><br>
+                              </div><br>
+                              <div class="row">
+                                  <h5>Yazdırma Özellikleri</h5>
+                                  <span><b>Renk Seçeneği: </b>{{product.packageColorMode}}</span><br>
+                                  <span><b>Baskı Seçeneği: </b>{{product.packageDuplexMode}}</span><br>
+                                  <span><b>Kağıt Boyu: </b>{{product.packagePageSize}}</span><br>
+                                  <span><b>Kağıt Türü: </b>{{product.packagePaperType}}</span><br>
+                                  <span><b>Bir Yüzdeki Sayfa Sayısı: </b>{{product.packageSheetsPerPage}}</span><br>
+                                  <span><b>Adet: </b>{{product.quantity}}</span>
+                              </div><br>
+                              <div class="row">
+                                <h5>Müşteri Notu</h5>
+                                <span>{{product.productNote}}</span>
+                              </div>
+                              <div class="row my-3">
+                                  <div class="col h4"><b >Ürün Fiyatı: </b>{{product.price}}₺</div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div><br>
+            <div class="float-end" *ngIf="item.orderStatus<4">
+              <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#statusModal" (click)="this.updateOrder=item">Sipariş Durumunu Değiştir</button>
+            </div>
+          </div>
+          <div class="card-footer text-muted" [ngClass]="item.orderStatus == 5 ? 'bg-danger-subtle' : item.orderStatus ==4 ? 'bg-success-subtle' : 'bg-muted' ">
+            <div class="row float-start">
+              <b class="text-dark">Toplam Ücret: {{item.price}}₺</b>
+            </div>
+            <div class="row float-end">
+              <div class="col ms-2"><b>Sipariş Tarihi: {{item.createdDate}}</b></div>
+            </div>
+            <div class="row float-end">
+              <div class="col " *ngIf="item.deliveryDate && item.orderStatus == 4"><b>Teslim Edilme Tarihi:</b> {{item.deliveryDate}}</div>
+            </div>          
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="this.updateOrder" class="modal fade" id="statusModal" tabindex="-1" aria-labelledby="statusModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="statusModalLabel">Sipariş Durumunu Değiştir</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <span><b>Müşteri Adı:</b>{{this.updateOrder.customerName}}</span><br>
+        <span><b>Müşteri Numarası: </b>{{this.updateOrder.customerPhoneNumber}}</span><br>
+        <span><b>Müşteri Adresi: </b>{{this.updateOrder.customerAddress}}</span><br>
+        <span><b>Sipariş Tarihi: </b>{{this.updateOrder.createdDate}}</span><br>
+        <span><b>Sipariş Tutarı: </b>{{this.updateOrder.price}}₺</span><br><br>
+        <select #statusSelect class="form-control form-select border-0 border-bottom rounded-0" id="statusSelect" name="statusSelect">
+          <option *ngIf="this.updateOrder.orderStatus <2" value='2'>Hazırlanıyor</option>
+          <option *ngIf="this.updateOrder.orderStatus <3"  value='3'>Hazır</option>
+          <option *ngIf="this.updateOrder.orderStatus <4" value='4'>Teslim Edildi</option>
+          <option *ngIf="this.updateOrder.orderStatus <4" value='5'>İptal Edildi</option>
+        </select>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">İptal Et</button>
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="updateOrderStatus()">Kaydet</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,106 @@
+<section class="py-3 py-md-5 py-xl-8">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="mb-5">
+          <h2 class="display-5 fw-bold text-center">Başvuru Yap</h2>
+          <p class="text-center m-0">Üyeliğin var mı? <a routerLink="/login" class="link-dark text-decoration-none"><strong>Giriş Yap</strong></a></p>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-10 col-xl-8">
+        <div class="row gy-5 justify-content-center">
+          <div class="col-12 col-lg-5">
+            <form [formGroup]="frm" (ngSubmit)="onSubmit(frm.value)">
+              <div class="row gy-3 overflow-hidden">
+                <div class="col-12">
+                  <div class="form-floating mb-3">
+                    <input type="text" formControlName="companyName" [ngClass]="{'is-invalid': submitted && component.companyName.errors}" class="form-control border-0 border-bottom rounded-0" name="companyName" id="companyName" placeholder="Şirket Adı" required>                    <label for="companyName" class="form-label">Şirket Adı</label>
+                    <small class="text-danger form-text invalid-feedback" *ngIf="submitted && component.companyName.errors?.required">Şirket adı boş bırakılamaz.</small>
+                    <small class="text-danger form-text invalid-feedback" *ngIf="submitted && (component.companyName.errors?.maxlength || component.companyName.errors?.minlength )">Şirket adı alanı 3-50 karakter arasında olmalıdır.</small>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-floating mb-3">
+                      <select #citySelect class="form-control form-select border-0 border-bottom rounded-0" id="city" (change)="changeCity()">
+                          <option disabled selected [value]="">İl Seçiniz</option>
+                          <option *ngFor="let city of cities" [value]="city.cityID">{{city.cityName}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-floating mb-3">
+                      <select #districtSelect class="form-control form-select border-0 border-bottom rounded-0" formControlName="districtId" [ngClass]="{'is-invalid':submitted && component.districtId.errors}" id="district" name="district" (change)="changeDistrict()" formControlName="districtId">
+                          <option value='' disabled selected>İlçe Seçiniz</option>
+                          <option *ngFor="let district of districts" [value]="district.districtID" >{{district.districtName}}</option>
+                      </select>
+                      <small class="text-danger form-text invalid-feedback" *ngIf="submitted && component.districtId.errors?.required">Lütfen ilçenizi seçiniz.</small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-floating mb-3">
+                    <input type="text" formControlName="address" [ngClass]="{'is-invalid':submitted && component.address.errors}" class="form-control border-0 border-bottom rounded-0" name="address" id="address" placeholder="Adres" required>
+                    <label for="address" class="form-label">Adres</label>
+                    <small class="text-danger form-text invalid-feedback" *ngIf="submitted && component.address.errors?.required">Soyad alanı boş bırakılamaz.</small>
+                    <small class="text-danger form-text invalid-feedback" *ngIf="submitted && (component.address.errors?.maxlength || component.address.errors?.minlength )">Adres alanı 20-200 karakter arasında olmalıdır.</small>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-floating mb-3">
+                    <input type="text" formControlName="phoneNumber" [ngClass]="{'is-invalid':submitted && component.phoneNumber.errors}" class="form-control border-0 border-bottom rounded-0" name="phoneNumber" id="phoneNumber" placeholder="+90" required>
+                    <label for="phoneNumber" class="form-label">Telefon</label>
+                    <small class="text-danger form-text invalid-feedback" *ngIf="submitted && component.phoneNumber.errors?.required">Telefon numarası boş bırakılamaz.</small>
+                    <small class="text-danger form-text invalid-feedback" *ngIf="submitted && component.phoneNumber.errors?.pattern">Lütfen 10 haneli telefon numaranızı, başında 0 olmadan giriniz.</small>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-floating mb-3">
+                    <input type="email" formControlName="email" [ngClass]="{'is-invalid':submitted && component.email.errors}" class="form-control border-0 border-bottom rounded-0" name="email" id="email" placeholder="name@example.com" required>
+                    <label for="email" class="form-label">Mail Adresi</label>
+                    <small class="text-danger form-text invalid-feedback" *ngIf="submitted && component.email.errors?.required">Email adresi boş bırakılamaz.</small>
+                    <small class="text-danger form-text invalid-feedback" *ngIf="submitted && component.email.errors?.email">Lütfen geçerli bir email adresi girin.</small>
+                    <small class="text-danger form-text invalid-feedback" *ngIf="submitted && (component.email.errors?.maxlength || component.email.errors?.minlength )">Email adresi en fazla 50 karakter olabilir.</small>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-floating mb-3">
+                    <input type="password" formControlName="password" [ngClass]="{'is-invalid':submitted && component.password.errors}" class="form-control border-0 border-bottom rounded-0" name="password" id="password" value="" placeholder="Password" required>
+                    <label for="password" class="form-label">Şifre</label>
+                    <small class="text-danger form-text invalid-feedback" *ngIf="submitted && component.password.errors?.required">Şifre boş bırakılamaz.</small>
+                    <small class="text-danger form-text invalid-feedback" *ngIf="submitted && (component.password.errors?.maxlength || component.password.errors?.minlength )">Lütfen 8-30 karakter aralığında bir şifre belirleyiniz.</small>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-floating mb-3">
+                    <input type="password" formControlName="passwordAgain" [ngClass]="{'is-invalid':(submitted && component.passwordAgain.errors)}" class="form-control border-0 border-bottom rounded-0" name="passwordAgain" id="passwordAgain" value="" placeholder="passwordAgain" required>
+                    <label for="passwordAgain" class="form-label">Şifre Tekrar</label>
+                    <small class="text-danger form-text invalid-feedback" *ngIf="submitted && component.passwordAgain.errors?.required">Şifre boş bırakılamaz.</small>
+                    <small class="text-danger form-text invalid-feedback" *ngIf="submitted && (component.passwordAgain.errors?.maxlength || component.passwordAgain.errors?.minlength )">Lütfen 8-30 karakter aralığında bir şifre belirleyiniz.</small>
+                    <small class="text-danger "*ngIf="submitted && frm.hasError('notSame')">Şifreler farklı!</small>
+
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-check">
+                    <input class="form-check-input" formControlName="iAgree" [ngClass]="{'is-invalid':submitted && component.iAgree.errors}" type="checkbox" name="iAgree" id="iAgree" required>
+                    <label class="form-check-label text-secondary" for="iAgree">
+                      <a class="text-dark "><strong>Kullanım koşullarını</strong></a> kabul ediyorum.
+                    </label>
+                    <small class="text-danger form-text invalid-feedback" *ngIf="submitted && component.iAgree.errors">Lütfen kullanıcı sözleşmesini onaylayınız!</small>
+
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="d-grid">
+                    <button class="btn btn-dark btn-lg" type="submit">Başvur</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
