@@ -1,4 +1,8 @@
- Proje detayları, BitirmeRaporu.pdf isimli bitirme raporunda anlatılmıştır.
+Proje Detayları, BitirmeRaporu.pdf isimli bitirme raporunda anlatılmıştır.
+
+API Projesi https://github.com/byrmgng/WebFotokopi-API
+
+Müşteri Client Projesi https://github.com/byrmgng/WebFotokopi-Customer-Client
 
 # WebFotokopiSeller
 
